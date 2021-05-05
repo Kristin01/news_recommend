@@ -7,6 +7,7 @@ from util import text2vec
 
 model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
 # Load from file
+pkl_filename = "model.pkl"
 with open(pkl_filename, 'rb') as file:
     kmeans_model = pickle.load(file)
 
@@ -16,7 +17,6 @@ def infer_cluster(text):
 
 news_path = sys.argv[1]
 text = open(news_path).read()
-pkl_filename = "model.pkl"
 
 
 # Calculate the accuracy score and predict target values
