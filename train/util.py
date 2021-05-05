@@ -1,3 +1,4 @@
+import numpy as np
 
 def text_to_wordlist(text, remove_stopwords=False, stem_words=False):
     # Clean the text, with the option to remove stopwords and to stem words.
@@ -53,5 +54,5 @@ def text_to_wordlist(text, remove_stopwords=False, stem_words=False):
     # Return a list of words
     return(text)
 
-def text2vec(text):
+def text2vec(model, text):
     return np.mean([model[x] for x in text.split() if x in model.vocab], axis=0).reshape(1,-1)
