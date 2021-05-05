@@ -1,4 +1,5 @@
 import numpy as np
+import re
 
 def text_to_wordlist(text, remove_stopwords=False, stem_words=False):
     # Clean the text, with the option to remove stopwords and to stem words.

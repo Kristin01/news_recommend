@@ -36,8 +36,9 @@ news_df['words'] = news_df.ori_text.progress_apply(text_to_wordlist)
 
 ## Load Google pretrained model
 model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
-
-news_df['vectors'] = news_df.words.progress_apply(text2vec)
+def gtext2vec(text):
+    return text2vec(model,text)
+news_df['vectors'] = news_df.words.progress_apply(gtext2vec)
 
 ## Clustering and generating scatter
 X = np.concatenate(news_df['vectors'].values)
@@ -46,7 +47,7 @@ kmeans.fit(X)
 news_df['cluster'] = kmeans.predict(X)
 
 ## Save News
-news_df = news_df.drop(["ori_text"], axis=1)
+news_df = news_df.drop(["ori_text", "words"], axis=1)
 news_df.to_pickle('news_df.pkl')
 
 ## Save Model 
