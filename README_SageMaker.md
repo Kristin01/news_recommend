@@ -28,17 +28,7 @@ It is already saved in s3 with path `nyu-cc-final-recommend-news/news_df.pkl`
 ## Start Inference Service
 
 - run `python3 -m pip install boto3 sagemaker`
-- run `sudo ENDPOINT_NAME=${inference_endpoint} AWS_DEFAULT_REGION="us-east-1" python3 predict_aws.py` to start inference service
-
-e.g.
-```
-sudo ENDPOINT_NAME="kmeans-2021-05-19-15-14-39-730" AWS_DEFAULT_REGION="us-east-1" python3 predict_aws.py
-```
-
-```
-sudo ENDPOINT_NAME="kmeans-2021-05-19-15-14-39-730" AWS_DEFAULT_REGION="us-east-1" ACCESS_KEY="AKIA4Y3275Z65YMNAU6Y" SECRET_KEY="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" python3 predict_aws.py
-```
-
+- run `sudo ENDPOINT_NAME=${inference_endpoint} AWS_DEFAULT_REGION="us-east-1" ACCESS_KEY="" SECRET_KEY="" python3 predict_aws.py` to start inference service
 ## Validation
 
 1. At local chrome web brower, install RestMan

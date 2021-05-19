@@ -43,7 +43,7 @@ def sagemaker_kmeans_predict(vec):
 
 def infer_cluster(text):
   vec = text2vec(model, text)
-  return [sagemaker_kmeans_predict(vec)[0], vec]
+  return [sagemaker_kmeans_predict(vec), vec]
   
 print("Loading news data source")
 os.system("rm news_df.pkl")
