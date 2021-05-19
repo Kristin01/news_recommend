@@ -30,8 +30,9 @@ def infer_cluster(text):
   vec = text2vec(model, text)
   return [sagemaker_kmeans_predict(vec)[0], vec]
   
-
 print("Loading news data source")
+os.system("rm news_df.pkl")
+os.system("curl -O https://nyu-cc-final-recommend-news.s3.amazonaws.com/news_df.pkl")
 pkl_filename = "news_df.pkl"
 with open(pkl_filename, 'rb') as file:
     news_df = pickle.load(file)

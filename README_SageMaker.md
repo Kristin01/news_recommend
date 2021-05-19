@@ -6,14 +6,16 @@ recommend news with Amazon SageMaker
 1. Create an Notebook in Sagemaker (instance type c4.2xlarge, disksize 20GB) and run
 2. upload setup-aws.ipynb to the notebook and run all cells
 
-It will download the code from github and download Google pre-trained word2text model.
+It will download the code from github and download Google pre-trained word2vec model.
 
 ## Training
 
 - Open train/train_aws.ipynb  and run all
 
-It will train a brand new model with Sagemaker and start an inference end point. 
-Note the inference end point from SageMaker-Inference (`inference_endpoint`).
+It will train a brand new model with Sagemaker and start an inference endpoint.
+You will get an inference endpoint from Sagemaker. Note the inference endpoint from SageMaker-Inference (`inference_endpoint`).
+You will also get news_df.pkl which contains the source news and will be used in inference web service.
+It is already saved in s3 with path `nyu-cc-final-recommend-news/news_df.pkl`
 
 ## Start Inference Web Service
 
