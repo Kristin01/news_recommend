@@ -7,11 +7,19 @@ import redis
 import json
 from util import text2vec
 import time
+import boto3
+import sagemaker
 from sagemaker import KMeansPredictor
 
 # grab environment variables
 ENDPOINT_NAME = os.environ['ENDPOINT_NAME']
-kmeans_endpoint = KMeansPredictor(ENDPOINT_NAME)
+ACCESS_KEY = os.environ['ACCESS_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
+
+session = sagemaker.Session(boto3.session.Session(\
+  aws_access_key_id=ACCESS_KEY,\
+  aws_secret_access_key=SECRET_KEY))
+kmeans_endpoint = KMeansPredictor(ENDPOINT_NAME, session)
 
 PREDICT_Q="predict_q"
 r = redis.Redis()

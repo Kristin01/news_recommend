@@ -27,6 +27,10 @@ Note the inference end point from SageMaker-Inference (`inference_endpoint`).
 
 - run `sudo ENDPOINT_NAME=${inference_endpoint} python predict_aws.py` to start inference service
 
+```
+sudo ENDPOINT_NAME="kmeans-2021-05-19-15-14-39-730" AWS_DEFAULT_REGION="us-east-1" ACCESS_KEY="AKIA4Y3275Z65YMNAU6Y" SECRET_KEY="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" python3 predict_aws.py
+```
+
 ## Validation
 
 1. At local chrome web brower, install RestMan
