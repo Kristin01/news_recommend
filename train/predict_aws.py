@@ -7,7 +7,10 @@ import redis
 import json
 from util import text2vec
 import time
+import boto3
+import sagemaker
 from sagemaker import KMeansPredictor
+sagemaker.Session(boto3.session.Session())
 
 # grab environment variables
 ENDPOINT_NAME = os.environ['ENDPOINT_NAME']
@@ -17,6 +20,12 @@ PREDICT_Q="predict_q"
 r = redis.Redis()
 
 print("Loading Google pre-trained model")
+import os.path
+from os import path
+if not path.exists("GoogleNews-vectors-negative300.bin"):
+  os.system('wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"')
+  os.system("gzip -d GoogleNews-vectors-negative300.bin.gz")
+
 model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
 
 # define sagemaker K-means endpoint
