@@ -53,8 +53,8 @@ with open(pkl_filename, 'rb') as file:
     news_df = pickle.load(file)
 
 def recommend_news(user_info):
-  longitude = user_info["longitude"]
-  latitude = user_info["latitude"]
+  longitude = user_info["long"]
+  latitude = user_info["lat"]
   text = user_info["text"]
   if longitude == "-74.254845" and latitude == "40.495791":
     text = text + " New York"
