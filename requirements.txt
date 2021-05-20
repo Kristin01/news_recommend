@@ -11,3 +11,5 @@ rq==1.2.2
 pandas==1.1.5
 nltk==3.6.2
 seaborn==0.11.1
+boto3==1.17.75
+sagemaker==2.41.0

@@ -1,3 +1,4 @@
+import json
 from flask import Flask
 from flask import request
 import redis
@@ -18,7 +19,10 @@ def predict():
     if request.method == 'POST':
         rid = str(uuid.uuid4())
         text = request.form['text']
-        r.set(rid, text)
+        longitude = request.form['longitude']
+        latitude = request.form['latitude']
+        user_info = {"text": text, "long": longitude, "lat": latitude}
+        r.set(rid, json.dumps(user_info))
         r.rpush(config.PREDICT_Q, rid)
         for i in range(50):
             res = r.get(rid + "res")
