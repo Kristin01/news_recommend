@@ -21,13 +21,13 @@ It is already saved in s3 with path `nyu-cc-final-recommend-news/news_df.pkl`
 
 1. create an EC2 (instance type c4.2xlarge, disksize 20GB, ubuntu, open 80 port, require external ip `external_ip`)
 2. run `git clone https://github.com/Kristin01/news_recommend.git`
-3. run `python3 -m pip install -r requirements.txt` to install dependences
+3. run `sudo python3 -m pip install -r requirements.txt` to install dependences
 4. check if redis-server is installed, otherwise run `sudo apt-get install redis-server`
 5. run `sudo python3 app.py &` to start the inference web service
 
 ## Start Inference Service
 
-- run `python3 -m pip install boto3 sagemaker`
+- run `sudo python3 -m pip install boto3 sagemaker`
 - run `sudo ENDPOINT_NAME=${inference_endpoint} AWS_DEFAULT_REGION="us-east-1" python3 predict_aws.py` to start inference service
 
 e.g.
