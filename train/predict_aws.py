@@ -46,7 +46,16 @@ pkl_filename = "news_df.pkl"
 with open(pkl_filename, 'rb') as file:
     news_df = pickle.load(file)
 
-def recommend_news(text):
+def recommend_news(user_info):
+  longitude = user_info["longitude"]
+  latitude = user_info["latitude"]
+  text = user_info["text"]
+  if longitude == "-74.254845" and latitude == "40.495791":
+    text = text + " New York"
+  if longitude == "-77.040470" and latitude == "38.933776":
+    text = text + " Washington D.C."
+  if longitude == "-71.185923" and latitude == "42.236275":
+    text = text + " Boston"
   [predicted_clustor, vec] = infer_cluster(text)
   recommends = pd.DataFrame([])
   for index, row in news_df.iterrows():
@@ -61,11 +70,11 @@ while True:
     rid = r.lpop(PREDICT_Q)
     if rid != None:
         print(rid)
-        text = r.get(rid).decode("utf-8")
+        user_info = json.loads(r.get(rid).decode("utf-8"))
         rid = rid.decode("utf-8")
-        print(text)
+        print(user_info)
         # Calculate the accuracy score and predict target values
-        [cluster, recommends] = recommend_news(text)
+        [cluster, recommends] = recommend_news(user_info)
         print(cluster)
         print(recommends)
         res = json.dumps({"cluster": cluster, "news": recommends.to_json()})
