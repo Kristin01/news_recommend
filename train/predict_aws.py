@@ -7,16 +7,31 @@ import redis
 import json
 from util import text2vec
 import time
+
+import boto3
+import sagemaker
 from sagemaker import KMeansPredictor
 
 # grab environment variables
 ENDPOINT_NAME = os.environ['ENDPOINT_NAME']
-kmeans_endpoint = KMeansPredictor(ENDPOINT_NAME)
+ACCESS_KEY = os.environ['ACCESS_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
+
+session = sagemaker.Session(boto3.session.Session(\
+  aws_access_key_id=ACCESS_KEY,\
+  aws_secret_access_key=SECRET_KEY))
+kmeans_endpoint = KMeansPredictor(ENDPOINT_NAME, session)
 
 PREDICT_Q="predict_q"
 r = redis.Redis()
 
 print("Loading Google pre-trained model")
+import os.path
+from os import path
+if not path.exists("GoogleNews-vectors-negative300.bin"):
+  os.system('wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"')
+  os.system("gzip -d GoogleNews-vectors-negative300.bin.gz")
+
 model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)
 
 # define sagemaker K-means endpoint
@@ -28,7 +43,7 @@ def sagemaker_kmeans_predict(vec):
 
 def infer_cluster(text):
   vec = text2vec(model, text)
-  return [sagemaker_kmeans_predict(vec)[0], vec]
+  return [sagemaker_kmeans_predict(vec), vec]
   
 print("Loading news data source")
 os.system("rm news_df.pkl")
@@ -45,7 +60,7 @@ def recommend_news(text):
       recommends = recommends.append(row)
       if len(recommends) > 10:
         break
-  return str(predicted_clustor[0]), recommends
+  return str(predicted_clustor), recommends
 
 print("Recommendation start up complete")
 while True:
