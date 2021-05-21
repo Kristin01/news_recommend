@@ -10,7 +10,7 @@ It will download the code from github and download Google pre-trained word2vec m
 
 ## Training
 
-- Open train/train_aws.ipynb  and run all
+- Open train/train_aws.ipynb and run all
 
 It will train a brand new model with Sagemaker and start an inference endpoint.
 You will get an inference endpoint from Sagemaker. Note the inference endpoint from SageMaker-Inference (`inference_endpoint`).
