@@ -63,13 +63,16 @@ def recommend_news(user_info):
   if longitude == "-71.185923" and latitude == "42.236275":
     text = text + " Boston"
   [predicted_clustor, vec] = infer_cluster(text)
-  recommends = pd.DataFrame([])
+  res_news = []
   for index, row in news_df.iterrows():
     if row["cluster"] == predicted_clustor:
-      recommends = recommends.append(row)
-      if len(recommends) > 10:
+      news = {}
+      news["title"] = row["title"]
+      news["link"] = row["link"]
+      res_news.append(news)
+      if len(res_news) > 10:
         break
-  return str(predicted_clustor), recommends
+  return str(predicted_clustor), res_news
 
 print("Recommendation start up complete")
 while True:
@@ -83,7 +86,7 @@ while True:
         [cluster, recommends] = recommend_news(user_info)
         print(cluster)
         print(recommends)
-        res = json.dumps({"cluster": cluster, "news": recommends.to_json()})
+        res = json.dumps({"cluster": cluster, "news": recommends})
         r.set(rid + "res", res)
     time.sleep(0.1)
 
